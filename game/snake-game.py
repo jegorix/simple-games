@@ -9,6 +9,7 @@ pygame.display.set_caption("Project")
 screen = pygame.display.set_mode(window_size)
 background_color = (0, 0, 0)
 running = True
+paused = False
 
 # background_image = pygame.image.load('images/back.jpeg')
 # background_image = pygame.transform.scale(background_image, window_size)
@@ -103,6 +104,22 @@ def game_over_menu():
 while running:
     screen.fill(background_color)
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            running = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                paused = not paused
+
+    if paused:
+        pause_text = game_over_font.render("PAUSE", True, (255, 255, 255))
+        screen.blit(pause_text, ((window_size[0] - pause_text.get_width()) // 2,
+                                 (window_size[1] - pause_text.get_height()) // 2))
+        pygame.display.update()
+        continue
+
     if game_over_time:
         pygame.time.wait(1500)
         if game_over_menu():
@@ -130,8 +147,9 @@ while running:
     if keys[pygame.K_d] and x_pos + circle_radius < window_size[0]:
         x_pos += speed
 
-    if keys[pygame.K_SPACE]:
+    if keys[pygame.K_k]:
         score += 1
+
 
 
     rect_y += rect_speed
@@ -161,9 +179,5 @@ while running:
         game_over_time = time.time()
 
 
-    pygame.display.update()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            running = False
+    pygame.display.update()
