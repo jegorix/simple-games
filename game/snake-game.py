@@ -32,9 +32,41 @@ score = 0
 
 font = pygame.font.Font(None, 36)
 game_over_font = pygame.font.Font(None, 72)
+button_font = pygame.font.Font(None, 48)
 
 game_over_time = None
 
+def draw_button(text, x, y, width, height):
+    button_rect = pygame.Rect(x, y, width, height)
+    pygame.draw.rect(screen, (200, 200, 200), button_rect, border_radius=10)
+    text_render = button_font.render(text, True, (0, 0, 0))
+    text_x = x + (width - text_render.get_width()) / 2
+    text_y = y + (height - text_render.get_height()) / 2
+    screen.blit(text_render, (text_x, text_y))
+    return button_rect
+
+
+def start_menu():
+    screen.fill(background_color)
+    title_text = button_font.render("WELCOME TO THE GAME", True, (255, 255, 255))
+    screen.blit(title_text, ((window_size[0] - title_text.get_width()) / 2, 200))
+    start_button = draw_button("START", (window_size[0] - 200) // 2, window_size[1] // 2,
+                                200, 100)
+
+    pygame.display.update()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                waiting = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.collidepoint(event.pos):
+                    waiting = False
+
+
+start_menu()
 
 while running:
     screen.fill(background_color)
