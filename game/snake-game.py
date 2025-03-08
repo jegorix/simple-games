@@ -13,13 +13,23 @@ running = True
 # screen.blit(background_image, (0, 0))
 rect_size = (100, 100)
 rect_color = (255, 255, 255)
-x_pos = (window_size[0] - rect_size[0]) / 2
-y_pos = (window_size[1] - rect_size[1]) / 2
+circle_radius = 20
+circle_color = (255, 0, 0)
+x_pos = int((window_size[0] - rect_size[0]) / 2)
+y_pos = int((window_size[1] - rect_size[1]) / 2)
+# x_pos = 0
+# y_pos = 0
 
 while running:
     screen.fill(background_color)
-    pygame.draw.rect(screen, rect_color, (x_pos, y_pos, rect_size[0], rect_size[1]))
+
+
+
+
+
+    pygame.draw.circle(screen, circle_color, (x_pos, y_pos), circle_radius)
     pygame.display.update()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
