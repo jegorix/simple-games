@@ -5,8 +5,8 @@ pygame.init()
 window_size = (800, 600)
 
 screen = pygame.display.set_mode(window_size)
-# background_color = (0, 0, 0)
-# screen.fill(background_color)
+background_color = (0, 0, 0)
+screen.fill(background_color)
 
 
 while True:
