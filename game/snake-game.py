@@ -15,8 +15,8 @@ rect_size = (100, 100)
 rect_color = (255, 255, 255)
 circle_radius = 20
 circle_color = (255, 0, 0)
-x_pos = int((window_size[0] - rect_size[0]) / 2)
-y_pos = int((window_size[1] - rect_size[1]) / 2)
+x_pos = window_size[0] // 2
+y_pos = window_size[1] // 2
 # x_pos = 0
 # y_pos = 0
 speed = 1
@@ -28,13 +28,13 @@ while running:
     if keys[pygame.K_w] and y_pos - circle_radius > 0:
         y_pos -= speed
 
-    if keys[pygame.K_s] and y_pos + circle_radius < 600:
+    if keys[pygame.K_s] and y_pos + circle_radius < window_size[1]:
         y_pos += speed
 
     if keys[pygame.K_a] and x_pos - circle_radius > 0:
         x_pos -= speed
 
-    if keys[pygame.K_d] and x_pos + circle_radius < 800:
+    if keys[pygame.K_d] and x_pos + circle_radius < window_size[0]:
         x_pos += speed
 
 
