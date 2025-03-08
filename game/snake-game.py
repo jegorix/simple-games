@@ -68,19 +68,54 @@ def start_menu():
 
 start_menu()
 
+
+def game_over_menu():
+    screen.fill(background_color)
+
+    game_over_text = game_over_font.render("GAME OVER", True, (255, 255, 255))
+    screen.blit(game_over_text, (window_size[0] // 2 - game_over_text.get_width() // 2, 50))
+
+    play_again_button = draw_button("PLAY AGAIN", (window_size[0] - 200) / 2, 200,
+                                    200, 100)
+    exit_button = draw_button("EXIT", (window_size[0] - 200) // 2, 400,
+                              200, 100)
+
+    pygame.display.update()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                waiting = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_again_button.collidepoint(event.pos):
+                  waiting = False
+                  return True
+
+                if exit_button.collidepoint(event.pos):
+                    pygame.quit()
+                    waiting = False
+
+
+
 while running:
     screen.fill(background_color)
 
     if game_over_time:
-        game_over_text = game_over_font.render("GAME OVER", True, (255, 255, 255))
-        screen.blit(game_over_text, (window_size[0] // 2 - game_over_text.get_width() // 2,
-        window_size[1] // 2 - game_over_text.get_height()))
-        pygame.display.update()
+        pygame.time.wait(1500)
+        if game_over_menu():
+            score = 0
+            rect_y = -rect_height
+            rect_x = random.randint(0, window_size[0] - rect_width)
+            game_over_time = None
+            x_pos = window_size[0] // 2
+            y_pos = window_size[1] - circle_radius
 
-        if time.time() - game_over_time > 2.5:
+        else:
             running = False
 
-        continue
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] and y_pos - circle_radius > 0:
@@ -96,7 +131,7 @@ while running:
         x_pos += speed
 
     if keys[pygame.K_SPACE]:
-        score = 9
+        score += 1
 
 
     rect_y += rect_speed
