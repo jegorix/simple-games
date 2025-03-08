@@ -95,8 +95,8 @@ while running:
     if keys[pygame.K_d] and x_pos + circle_radius < window_size[0]:
         x_pos += speed
 
-    # if keys[pygame.K_SPACE]:
-    #     score = 9
+    if keys[pygame.K_SPACE]:
+        score = 9
 
 
     rect_y += rect_speed
