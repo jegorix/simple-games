@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 pygame.init()
 
@@ -30,11 +31,24 @@ score = 0
 
 
 font = pygame.font.Font(None, 36)
+game_over_font = pygame.font.Font(None, 72)
 
+game_over_time = None
 
 
 while running:
     screen.fill(background_color)
+
+    if game_over_time:
+        game_over_text = game_over_font.render("GAME OVER", True, (255, 255, 255))
+        screen.blit(game_over_text, (window_size[0] // 2 - game_over_text.get_width(),
+        window_size[1] // 2 - game_over_text.get_height()))
+        pygame.display.update()
+
+        if time.time() - game_over_time > 5:
+            running = False
+
+        continue
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] and y_pos - circle_radius > 0:
@@ -72,9 +86,9 @@ while running:
     score_text = font.render(f"Score: {score}", True, (255, 255, 255))
     screen.blit(score_text, (10, 10))
 
-    if score >= 10:
-        pygame.quit()
-        running = False
+    if score >= 10 and game_over_time is None:
+        game_over_time = time.time()
+
 
     pygame.display.update()
 
