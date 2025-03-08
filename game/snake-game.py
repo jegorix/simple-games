@@ -16,7 +16,7 @@ running = True
 circle_radius = 20
 circle_color = (255, 0, 0)
 x_pos = window_size[0] // 2
-y_pos = window_size[1] // 2
+y_pos = window_size[1] - circle_radius
 speed = 1
 
 rect_height = 50
@@ -41,11 +41,11 @@ while running:
 
     if game_over_time:
         game_over_text = game_over_font.render("GAME OVER", True, (255, 255, 255))
-        screen.blit(game_over_text, (window_size[0] // 2 - game_over_text.get_width(),
+        screen.blit(game_over_text, (window_size[0] // 2 - game_over_text.get_width() // 2,
         window_size[1] // 2 - game_over_text.get_height()))
         pygame.display.update()
 
-        if time.time() - game_over_time > 5:
+        if time.time() - game_over_time > 2.5:
             running = False
 
         continue
@@ -63,11 +63,15 @@ while running:
     if keys[pygame.K_d] and x_pos + circle_radius < window_size[0]:
         x_pos += speed
 
+    # if keys[pygame.K_SPACE]:
+    #     score = 9
+
 
     rect_y += rect_speed
     if rect_y > window_size[1]:
         rect_y = -rect_height
         rect_x = random.randint(0, window_size[0] - rect_width)
+        score = 0
 
 
     if(x_pos - circle_radius < rect_x + rect_width and
