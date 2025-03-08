@@ -19,22 +19,22 @@ x_pos = int((window_size[0] - rect_size[0]) / 2)
 y_pos = int((window_size[1] - rect_size[1]) / 2)
 # x_pos = 0
 # y_pos = 0
-speed = 2
+speed = 1
 
 while running:
     screen.fill(background_color)
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and y_pos > 0:
+    if keys[pygame.K_UP] and y_pos - circle_radius > 0:
         y_pos -= speed
 
-    if keys[pygame.K_DOWN] and y_pos < 600:
+    if keys[pygame.K_DOWN] and y_pos + circle_radius < 600:
         y_pos += speed
 
-    if keys[pygame.K_LEFT] and x_pos > 0:
+    if keys[pygame.K_LEFT] and x_pos - circle_radius > 0:
         x_pos -= speed
 
-    if keys[pygame.K_RIGHT] and x_pos < 800:
+    if keys[pygame.K_RIGHT] and x_pos + circle_radius < 800:
         x_pos += speed
 
 
