@@ -117,6 +117,9 @@ while running:
         pause_text = game_over_font.render("PAUSE", True, (255, 255, 255))
         screen.blit(pause_text, ((window_size[0] - pause_text.get_width()) // 2,
                                  (window_size[1] - pause_text.get_height()) // 2))
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_text,(window_size[0] // 2 - score_text.get_width() // 2, 400))
+
         pygame.display.update()
         continue
 
