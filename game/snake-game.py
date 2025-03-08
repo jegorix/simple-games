@@ -54,6 +54,15 @@ while running:
         score += 1
 
 
+    if(x_pos - circle_radius < rect_x + rect_width and
+    x_pos + circle_radius > rect_x and
+    y_pos - circle_radius < rect_y + rect_height and
+    y_pos + circle_radius > rect_y):
+        rect_y = -rect_height
+        rect_x = random.randint(0, window_size[0] - rect_width)
+        score += 1
+
+
 
     pygame.draw.rect(screen, rect_color, (rect_x, rect_y, rect_width, rect_height))
     pygame.draw.circle(screen, circle_color, (x_pos, y_pos), circle_radius)
