@@ -29,6 +29,9 @@ rect_speed = 0.5
 score = 0
 
 
+font = pygame.font.Font(None, 36)
+
+
 
 while running:
     screen.fill(background_color)
@@ -51,7 +54,6 @@ while running:
     if rect_y > window_size[1]:
         rect_y = -rect_height
         rect_x = random.randint(0, window_size[0] - rect_width)
-        score += 1
 
 
     if(x_pos - circle_radius < rect_x + rect_width and
@@ -66,6 +68,14 @@ while running:
 
     pygame.draw.rect(screen, rect_color, (rect_x, rect_y, rect_width, rect_height))
     pygame.draw.circle(screen, circle_color, (x_pos, y_pos), circle_radius)
+
+    score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
+
+    if score >= 10:
+        pygame.quit()
+        running = False
+
     pygame.display.update()
 
     for event in pygame.event.get():
