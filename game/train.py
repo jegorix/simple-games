@@ -1,5 +1,7 @@
 import pygame
 
+clock = pygame.time.Clock()
+
 pygame.init()
 window_size = (1280, 748)
 screen = pygame.display.set_mode(window_size)
@@ -36,7 +38,14 @@ running = True
 while running:
 
     screen.blit(background_image, (0, 0))
+
+
     screen.blit(walk_right[player_anim_count],(300, 535))
+
+    if player_anim_count == 3:
+        player_anim_count = 0
+    else:
+        player_anim_count += 1
 
 
     pygame.display.update()
@@ -45,3 +54,4 @@ while running:
             pygame.quit()
             running = False
 
+    clock.tick(10)
