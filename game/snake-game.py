@@ -5,7 +5,7 @@ import time
 pygame.init()
 
 window_size = (800, 600)
-pygame.display.set_caption("Project")
+pygame.display.set_caption("Cath me if you can")
 screen = pygame.display.set_mode(window_size)
 background_color = (0, 0, 0)
 running = True
@@ -18,14 +18,14 @@ circle_radius = 20
 circle_color = (255, 0, 0)
 x_pos = window_size[0] // 2
 y_pos = window_size[1] - circle_radius
-speed = 1
+speed = 1  #10.5
 
 rect_height = 50
 rect_width = 50
 rect_color = (0, 0, 255)
 rect_x = random.randint(0, window_size[0] - rect_width)
 rect_y = -rect_height
-rect_speed = 0.5
+rect_speed = 0.5 # 9
 
 
 score = 0
@@ -34,8 +34,41 @@ score = 0
 font = pygame.font.Font(None, 36)
 game_over_font = pygame.font.Font(None, 72)
 button_font = pygame.font.Font(None, 48)
+matrix_font = pygame.font.Font(None, 30)
+
+GREEN = (0, 255, 0)
+DARKGREEN = (0, 100, 0)
 
 game_over_time = None
+
+
+
+class MatrixStream:
+    def __init__(self):
+        self.x = random.randint(0, window_size[0] // 20) * 20
+        self.y = random.randint(-window_size[1], 0)
+        self.speed = random.randint(2,7)
+        self.chars = [str(random.randint(0,9)) for _ in range(random.randint(5,15))]
+        self.age = 0
+
+    def fall(self):
+        self.y += self.speed
+        self.age += 1
+
+        if self.y > window_size[1]:
+            self.__init__()
+
+    def draw(self, surface):
+        for i, char in enumerate(self.chars):
+            color = GREEN if i == len(self.chars) - 1 else DARKGREEN
+            char_render = matrix_font.render(char, True, color)
+            surface.blit(char_render, (self.x, self.y - i * 20))
+
+
+streams = [MatrixStream() for _ in range(50)]
+
+
+
 
 def draw_button(text, x, y, width, height):
     button_rect = pygame.Rect(x, y, width, height)
@@ -103,6 +136,11 @@ def game_over_menu():
 
 while running:
     screen.fill(background_color)
+
+    for stream in streams:
+        stream.fall()
+        stream.draw(screen)
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
