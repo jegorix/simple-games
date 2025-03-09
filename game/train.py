@@ -1,12 +1,17 @@
 import pygame
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+window_size = (800, 600)
+screen = pygame.display.set_mode(window_size)
 
 square = pygame.Surface((50,170))
 square.fill('Blue')
 
+header_font = pygame.font.Font(None, 72)
+header_text = header_font.render("Press SPACE to start", True, (255,255,255))
+
 background_image = pygame.image.load('images/back.jpeg')
+
 
 myfont = pygame.font.Font('fonts/PTSerif-BoldItalic.ttf', 40)
 text_surface = myfont.render("Jegorix", False, (255,255,255))
@@ -21,6 +26,9 @@ while running:
     screen.blit(text_surface, (300,100))
 
     screen.blit(background_image, (550, 200))
+
+    screen.blit(header_text, ((window_size[0] - header_text.get_width()) // 2,
+                              (window_size[1] - header_text.get_height()) // 2 ))
 
     pygame.display.update()
     for event in pygame.event.get():
