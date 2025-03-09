@@ -37,6 +37,9 @@ player_anim_count = 0
 
 bg_x = 0
 
+bg_sound = pygame.mixer.Sound('sounds/sad-sound.mp3')
+bg_sound.play()
+
 running = True
 while running:
 
