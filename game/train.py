@@ -1,37 +1,43 @@
 import pygame
 
 pygame.init()
-window_size = (800, 600)
+window_size = (1280, 748)
 screen = pygame.display.set_mode(window_size)
 
-square = pygame.Surface((50,170))
-square.fill('Blue')
 
 
-header_font = pygame.font.Font(None, 72)
-header_text = header_font.render("Press SPACE to start", True, (255,255,255))
-
-background_image = pygame.image.load('images/back.jpeg')
+background_image = pygame.image.load('images/bg.png')
 
 
-myfont = pygame.font.Font('fonts/PTSerif-BoldItalic.ttf', 40)
-text_surface = myfont.render("Jegorix", False, (255,255,255))
+def load_and_scale(image_path, size):
+    image = pygame.image.load(image_path)
+    return pygame.transform.scale(image, size)
 
+
+player_size = (60, 70)
+
+walk_left = [
+    load_and_scale('images/player-left/l_1.png', player_size),
+    load_and_scale('images/player-left/l_2.png', player_size),
+    load_and_scale('images/player-left/l_3.png', player_size),
+    load_and_scale('images/player-left/l_4.png', player_size)
+]
+
+walk_right = [
+    load_and_scale('images/player-right/r_1.png', player_size),
+    load_and_scale('images/player-right/r_2.png', player_size),
+    load_and_scale('images/player-right/r_3.png', player_size),
+    load_and_scale('images/player-right/r_4.png', player_size)
+]
+
+player_anim_count = 0
 
 running = True
 while running:
-    screen.blit(square, (0, 500 - square.get_height()))
 
-    pygame.draw.circle(screen, 'Red', (252, 85), 10 )
+    screen.blit(background_image, (0, 0))
+    screen.blit(walk_right[player_anim_count],(300, 535))
 
-    pygame.draw.rect(screen, "Green", (5, 5, 50, 50))
-
-    screen.blit(text_surface, (300,100))
-
-    screen.blit(background_image, (550, 200))
-
-    screen.blit(header_text, ((window_size[0] - header_text.get_width()) // 2,
-                              (window_size[1] - header_text.get_height()) // 2 ))
 
     pygame.display.update()
     for event in pygame.event.get():
