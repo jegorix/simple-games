@@ -3,7 +3,8 @@ import pygame
 clock = pygame.time.Clock()
 
 pygame.init()
-window_size = (1280, 748)
+w_width, w_height = 1280, 748
+window_size = (w_width, w_height)
 screen = pygame.display.set_mode(window_size)
 
 
@@ -34,10 +35,13 @@ walk_right = [
 
 player_anim_count = 0
 
+bg_x = 0
+
 running = True
 while running:
 
-    screen.blit(background_image, (0, 0))
+    screen.blit(background_image, (bg_x, 0))
+    screen.blit(background_image, (bg_x + w_width, 0))
 
 
     screen.blit(walk_right[player_anim_count],(300, 535))
@@ -46,6 +50,11 @@ while running:
         player_anim_count = 0
     else:
         player_anim_count += 1
+
+    bg_x -= 10
+
+    if bg_x == -w_width:
+        bg_x = 0
 
 
     pygame.display.update()
