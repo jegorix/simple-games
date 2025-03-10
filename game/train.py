@@ -46,6 +46,9 @@ player_speed = 10
 player_x = 150
 player_y_pos = 535
 
+is_jump = False
+jump_count = 7
+
 
 running = True
 while running:
@@ -69,6 +72,27 @@ while running:
 
     elif keys[pygame.K_LEFT] and player_x > walk_right[player_anim_count].get_width():
         player_x -= player_speed
+
+
+    if not is_jump:
+        if keys[pygame.K_UP]:
+            is_jump = True
+    else:
+        if jump_count >= -7:
+            if jump_count > 0:
+                player_y_pos -= (jump_count ** 2) / 2
+            else:
+                player_y_pos += (jump_count ** 2) / 2
+
+            jump_count -= 1
+
+        else:
+            is_jump = False
+            jump_count = 7
+
+
+
+
 
 
     if player_anim_count == 3:
