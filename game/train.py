@@ -40,6 +40,10 @@ bg_x = 0
 bg_sound = pygame.mixer.Sound('sounds/sad-sound.mp3')
 bg_sound.play()
 
+player_speed = 10
+player_x = 150
+
+
 running = True
 while running:
 
@@ -47,7 +51,16 @@ while running:
     screen.blit(background_image, (bg_x + w_width, 0))
 
 
-    screen.blit(walk_right[player_anim_count],(300, 535))
+    screen.blit(walk_right[player_anim_count],(player_x, 535))
+
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RIGHT]:
+        player_x += player_speed
+
+    elif keys[pygame.K_LEFT]:
+        player_x -= player_speed
+
 
     if player_anim_count == 3:
         player_anim_count = 0
