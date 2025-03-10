@@ -4,6 +4,8 @@ clock = pygame.time.Clock()
 
 pygame.init()
 w_width, w_height = 1280, 748
+
+
 window_size = (w_width, w_height)
 screen = pygame.display.set_mode(window_size)
 
@@ -37,11 +39,12 @@ player_anim_count = 0
 
 bg_x = 0
 
-bg_sound = pygame.mixer.Sound('sounds/sad-sound.mp3')
-bg_sound.play()
+# bg_sound = pygame.mixer.Sound('sounds/sad-sound.mp3')
+# bg_sound.play()
 
 player_speed = 10
 player_x = 150
+player_y_pos = 535
 
 
 running = True
@@ -51,14 +54,20 @@ while running:
     screen.blit(background_image, (bg_x + w_width, 0))
 
 
-    screen.blit(walk_right[player_anim_count],(player_x, 535))
+    screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
 
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_RIGHT]:
+    if keys[pygame.K_LEFT]:
+        screen.blit(walk_left[player_anim_count], (player_x, player_y_pos))
+    else:
+        screen.blit(walk_right[player_anim_count], (player_x, player_y_pos))
+
+
+    if keys[pygame.K_RIGHT] and player_x < w_width - walk_right[player_anim_count].get_width() :
         player_x += player_speed
 
-    elif keys[pygame.K_LEFT]:
+    elif keys[pygame.K_LEFT] and player_x > walk_right[player_anim_count].get_width():
         player_x -= player_speed
 
 
@@ -67,7 +76,7 @@ while running:
     else:
         player_anim_count += 1
 
-    bg_x -= 10
+    bg_x -= 5
 
     if bg_x == -w_width:
         bg_x = 0
