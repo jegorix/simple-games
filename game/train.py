@@ -11,11 +11,11 @@ screen = pygame.display.set_mode(window_size)
 
 
 
-background_image = pygame.image.load('images/bg.png')
+background_image = pygame.image.load('images/bg.png').convert_alpha()
 
 
 def load_and_scale(image_path, size):
-    image = pygame.image.load(image_path)
+    image = pygame.image.load(image_path).convert_alpha()
     return pygame.transform.scale(image, size)
 
 
@@ -50,11 +50,18 @@ is_jump = False
 jump_count = 7
 
 
+ghost = pygame.image.load('images/ghost.png').convert_alpha()
+ghost_x = w_width + 10
+ghost_y = 535
+
+
+
 running = True
 while running:
 
     screen.blit(background_image, (bg_x, 0))
     screen.blit(background_image, (bg_x + w_width, 0))
+    screen.blit(ghost, (ghost_x, ghost_y))
 
 
     screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
@@ -106,6 +113,7 @@ while running:
     if bg_x == -w_width:
         bg_x = 0
 
+    ghost_x -= player_speed
 
     pygame.display.update()
     for event in pygame.event.get():
