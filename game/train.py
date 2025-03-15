@@ -10,6 +10,8 @@ window_size = (w_width, w_height)
 screen = pygame.display.set_mode(window_size)
 
 
+score_font = pygame.font.Font(None, 48)
+
 
 background_image = pygame.image.load('images/bg.png').convert_alpha()
 
@@ -132,6 +134,8 @@ while running:
 
 
 
+
+
         if player_anim_count == 3:
             player_anim_count = 0
         else:
@@ -144,6 +148,10 @@ while running:
 
     else:
         screen.fill((87,88,89))
+
+
+    score_text = score_font.render(f"Score: {score}", True, (255,255,255))
+    screen.blit(score_text, (50,50))
 
 
     pygame.display.update()
