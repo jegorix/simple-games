@@ -50,6 +50,9 @@ is_jump = False
 jump_count = 12
 
 
+score = 0
+
+
 ghost = pygame.image.load('images/ghost.png').convert_alpha()
 ghost_x = w_width + 10
 ghost_y = 535
@@ -59,6 +62,7 @@ ghost_list_in_game = []
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 2000)
 
+gameplay = True
 
 
 running = True
@@ -68,73 +72,78 @@ while running:
     screen.blit(background_image, (bg_x + w_width, 0))
     # screen.blit(ghost, (ghost_x, ghost_y))
 
+    if gameplay:
 
-    player_rect = walk_left[0].get_rect(topleft=(player_x, player_y_pos))
-    ghost_rect = ghost.get_rect(topleft = (ghost_x, ghost_y))
-
-
-    if ghost_list_in_game:
-        for elem in ghost_list_in_game:
-            screen.blit(ghost, elem)
-            elem.x -= 10
-
-            if player_rect.colliderect(elem):
-                print("Connect!")
+        player_rect = walk_left[0].get_rect(topleft=(player_x, player_y_pos))
+        ghost_rect = ghost.get_rect(topleft = (ghost_x, ghost_y))
 
 
+        if ghost_list_in_game:
+            for elem in ghost_list_in_game:
+                screen.blit(ghost, elem)
+                elem.x -= 10
+                if elem.x == ghost.get_width() - 4:
+                    score += 1
+                    print(score)
 
-    screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
+                if player_rect.colliderect(elem):
+                    gameplay = False
+                    print("Connect!")
 
-
-    if player_rect.colliderect(ghost_rect):
-        print("Connect!")
-
-
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_LEFT]:
-        screen.blit(walk_left[player_anim_count], (player_x, player_y_pos))
-    else:
-        screen.blit(walk_right[player_anim_count], (player_x, player_y_pos))
-
-
-    if keys[pygame.K_RIGHT] and player_x < w_width - walk_right[player_anim_count].get_width() :
-        player_x += player_speed
-
-    elif keys[pygame.K_LEFT] and player_x > walk_right[player_anim_count].get_width():
-        player_x -= player_speed
+        screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
 
 
-    if not is_jump:
-        if keys[pygame.K_UP]:
-            is_jump = True
-    else:
-        if jump_count >= -12:
-            if jump_count >  0:
-                player_y_pos -= (jump_count ** 2) // 2
-            else:
-                player_y_pos += (jump_count ** 2) // 2
+        if player_rect.colliderect(ghost_rect):
+            print("Connect!")
 
-            jump_count -= 2
 
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_LEFT]:
+            screen.blit(walk_left[player_anim_count], (player_x, player_y_pos))
         else:
-            is_jump = False
-            jump_count = 12
+            screen.blit(walk_right[player_anim_count], (player_x, player_y_pos))
+
+
+        if keys[pygame.K_RIGHT] and player_x < w_width - walk_right[player_anim_count].get_width() :
+            player_x += player_speed
+
+        elif keys[pygame.K_LEFT] and player_x > walk_right[player_anim_count].get_width():
+            player_x -= player_speed
+
+
+        if not is_jump:
+            if keys[pygame.K_UP]:
+                is_jump = True
+        else:
+            if jump_count >= -12:
+                if jump_count >  0:
+                    player_y_pos -= (jump_count ** 2) // 2
+                else:
+                    player_y_pos += (jump_count ** 2) // 2
+
+                jump_count -= 2
+
+            else:
+                is_jump = False
+                jump_count = 12
 
 
 
 
 
+        if player_anim_count == 3:
+            player_anim_count = 0
+        else:
+            player_anim_count += 1
 
-    if player_anim_count == 3:
-        player_anim_count = 0
+        bg_x -= 5
+
+        if bg_x == -w_width:
+            bg_x = 0
+
     else:
-        player_anim_count += 1
-
-    bg_x -= 5
-
-    if bg_x == -w_width:
-        bg_x = 0
+        screen.fill((87,88,89))
 
 
     pygame.display.update()
