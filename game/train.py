@@ -64,6 +64,10 @@ while running:
     screen.blit(ghost, (ghost_x, ghost_y))
 
 
+    player_rect = walk_left[0].get_rect(topleft=(player_x, player_y_pos))
+    ghost_rect = ghost.get_rect(top_left = (ghost_x, ghost_y))
+
+
     screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
 
 
