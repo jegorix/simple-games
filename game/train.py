@@ -53,6 +53,11 @@ jump_count = 12
 ghost = pygame.image.load('images/ghost.png').convert_alpha()
 ghost_x = w_width + 10
 ghost_y = 535
+ghost_list_in_game = []
+
+
+ghost_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(ghost_timer, 2000)
 
 
 
@@ -61,11 +66,21 @@ while running:
 
     screen.blit(background_image, (bg_x, 0))
     screen.blit(background_image, (bg_x + w_width, 0))
-    screen.blit(ghost, (ghost_x, ghost_y))
+    # screen.blit(ghost, (ghost_x, ghost_y))
 
 
     player_rect = walk_left[0].get_rect(topleft=(player_x, player_y_pos))
     ghost_rect = ghost.get_rect(topleft = (ghost_x, ghost_y))
+
+
+    if ghost_list_in_game:
+        for elem in ghost_list_in_game:
+            screen.blit(ghost, elem)
+            elem.x -= 10
+
+            if player_rect.colliderect(elem):
+                print("Connect!")
+
 
 
     screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
@@ -121,12 +136,18 @@ while running:
     if bg_x == -w_width:
         bg_x = 0
 
-    ghost_x -= player_speed
 
     pygame.display.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             running = False
+
+        if event.type == ghost_timer:
+            ghost_list_in_game.append(ghost.get_rect(topleft = (ghost_x, ghost_y)))
+
+
+
+
 
     clock.tick(20)
