@@ -47,7 +47,7 @@ player_x = 150
 player_y_pos = 535
 
 is_jump = False
-jump_count = 7
+jump_count = 12
 
 
 ghost = pygame.image.load('images/ghost.png').convert_alpha()
@@ -65,10 +65,14 @@ while running:
 
 
     player_rect = walk_left[0].get_rect(topleft=(player_x, player_y_pos))
-    ghost_rect = ghost.get_rect(top_left = (ghost_x, ghost_y))
+    ghost_rect = ghost.get_rect(topleft = (ghost_x, ghost_y))
 
 
     screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
+
+
+    if player_rect.colliderect(ghost_rect):
+        print("Connect!")
 
 
     keys = pygame.key.get_pressed()
@@ -90,17 +94,17 @@ while running:
         if keys[pygame.K_UP]:
             is_jump = True
     else:
-        if jump_count >= -7:
+        if jump_count >= -12:
             if jump_count >  0:
-                player_y_pos -= (jump_count ** 2) * 2
+                player_y_pos -= (jump_count ** 2) // 2
             else:
-                player_y_pos += (jump_count ** 2) * 2
+                player_y_pos += (jump_count ** 2) // 2
 
             jump_count -= 2
 
         else:
             is_jump = False
-            jump_count = 7
+            jump_count = 12
 
 
 
@@ -125,4 +129,4 @@ while running:
             pygame.quit()
             running = False
 
-    clock.tick(10)
+    clock.tick(20)
