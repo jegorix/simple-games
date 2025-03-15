@@ -61,6 +61,7 @@ while running:
 
 
     keys = pygame.key.get_pressed()
+
     if keys[pygame.K_LEFT]:
         screen.blit(walk_left[player_anim_count], (player_x, player_y_pos))
     else:
@@ -79,12 +80,12 @@ while running:
             is_jump = True
     else:
         if jump_count >= -7:
-            if jump_count > 0:
-                player_y_pos -= (jump_count ** 2) / 2
+            if jump_count >  0:
+                player_y_pos -= (jump_count ** 2) * 2
             else:
-                player_y_pos += (jump_count ** 2) / 2
+                player_y_pos += (jump_count ** 2) * 2
 
-            jump_count -= 1
+            jump_count -= 2
 
         else:
             is_jump = False
