@@ -10,8 +10,6 @@ window_size = (w_width, w_height)
 screen = pygame.display.set_mode(window_size)
 
 
-score_font = pygame.font.Font(None, 48)
-
 label = pygame.font.Font('fonts/PTSerif-BoldItalic.ttf', 96)
 lose_label = label.render("You Lose!", True, (193, 196, 199))
 restart_label = label.render("Restart", True, (115, 132, 148))
@@ -58,6 +56,8 @@ jump_count = 12
 
 
 score = 0
+score_font = pygame.font.Font(None, 48)
+
 
 
 ghost = pygame.image.load('images/ghost.png').convert_alpha()
@@ -84,6 +84,9 @@ while running:
         player_rect = walk_left[0].get_rect(topleft=(player_x, player_y_pos))
         ghost_rect = ghost.get_rect(topleft = (ghost_x, ghost_y))
 
+        score_text = score_font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_text, (50, 50))
+
 
         if ghost_list_in_game:
             for i, elem in enumerate(ghost_list_in_game):
@@ -100,6 +103,7 @@ while running:
                     print("Connect!")
 
         screen.blit(walk_right[player_anim_count],(player_x, player_y_pos))
+
 
 
         if player_rect.colliderect(ghost_rect):
@@ -157,10 +161,19 @@ while running:
         screen.fill((87,88,89))
         screen.blit(lose_label, ((w_width - lose_label.get_width()) // 2,  lose_label.get_height()))
         screen.blit(restart_label, restart_label_rect)
+        screen.blit(score_text, (50, 50))
+
+        mouse_pos = pygame.mouse.get_pos()
+        if restart_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+            score = 0
+            gameplay = True
+            player_x = 150
+            ghost_list_in_game.clear()
 
 
-    score_text = score_font.render(f"Score: {score}", True, (255,255,255))
-    screen.blit(score_text, (50,50))
+
+
+
 
 
     pygame.display.update()
