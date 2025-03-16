@@ -81,12 +81,14 @@ while running:
 
 
         if ghost_list_in_game:
-            for elem in ghost_list_in_game:
+            for i, elem in enumerate(ghost_list_in_game):
                 screen.blit(ghost, elem)
                 elem.x -= 10
+
+
                 if elem.x == ghost.get_width() - 4:
                     score += 1
-                    print(score)
+                    ghost_list_in_game.pop(i)
 
                 if player_rect.colliderect(elem):
                     gameplay = False
