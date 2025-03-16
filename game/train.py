@@ -189,6 +189,7 @@ while running:
             gameplay = True
             player_x = 150
             ghost_list_in_game.clear()
+            fireball_list.clear()
 
         elif quit_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
             pygame.quit()
