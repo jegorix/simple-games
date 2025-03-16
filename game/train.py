@@ -12,6 +12,9 @@ screen = pygame.display.set_mode(window_size)
 
 score_font = pygame.font.Font(None, 48)
 
+label = pygame.font.Font('fonts/PTSerif-BoldItalic.ttf', 96)
+lose_label = label.render("You Lose!", True, (193, 196, 199))
+# restart_label = label.render("Restart", True, (115, 132, 148))
 
 background_image = pygame.image.load('images/bg.png').convert_alpha()
 
@@ -150,6 +153,7 @@ while running:
 
     else:
         screen.fill((87,88,89))
+        screen.blit(lose_label, ((w_width - lose_label.get_width()) // 2,  lose_label.get_height()))
 
 
     score_text = score_font.render(f"Score: {score}", True, (255,255,255))
