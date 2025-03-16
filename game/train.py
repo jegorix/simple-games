@@ -11,10 +11,20 @@ screen = pygame.display.set_mode(window_size)
 
 
 label = pygame.font.Font('fonts/PTSerif-BoldItalic.ttf', 96)
+quit_font = pygame.font.Font('fonts/PTSerif-BoldItalic.ttf', 64)
+
+
+
 lose_label = label.render("You Lose!", True, (193, 196, 199))
 restart_label = label.render("Restart", True, (115, 132, 148))
 restart_label_rect = restart_label.get_rect(topleft = ((w_width - restart_label.get_width()) // 2,
                                                        lose_label.get_height() + (restart_label.get_height() + 50)))
+
+
+quit_label = quit_font.render('Quit', True, (255, 255, 255))
+quit_label_rect = quit_label.get_rect(topleft = ((w_width - quit_label.get_width()) // 2,
+                                    lose_label.get_height() + restart_label.get_height() + (quit_label.get_height() + 150)))
+
 
 background_image = pygame.image.load('images/bg.png').convert_alpha()
 
@@ -162,6 +172,7 @@ while running:
         screen.blit(lose_label, ((w_width - lose_label.get_width()) // 2,  lose_label.get_height()))
         screen.blit(restart_label, restart_label_rect)
         screen.blit(score_text, (50, 50))
+        screen.blit(quit_label, quit_label_rect)
 
         mouse_pos = pygame.mouse.get_pos()
         if restart_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
@@ -170,7 +181,9 @@ while running:
             player_x = 150
             ghost_list_in_game.clear()
 
-
+        elif quit_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+            pygame.quit()
+            running = False
 
 
 
