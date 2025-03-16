@@ -79,9 +79,10 @@ ghost_list_in_game = []
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 2000)
 
+fireball = pygame.image.load('images/fireball.png').convert_alpha()
+fireball_list = []
+
 gameplay = True
-
-
 running = True
 while running:
 
@@ -153,10 +154,6 @@ while running:
 
 
 
-
-
-
-
         if player_anim_count == 3:
             player_anim_count = 0
         else:
@@ -166,6 +163,18 @@ while running:
 
         if bg_x == -w_width:
             bg_x = 0
+
+        if keys[pygame.K_SPACE]:
+            fireball_list.append(fireball.get_rect(topleft = (player_x + 35, player_y_pos + 13)))
+
+        if fireball_list:
+            for elem in fireball_list:
+                screen.blit(fireball, (elem.x, elem.y))
+                elem.x += 10
+
+
+
+
 
     else:
         screen.fill((87,88,89))
