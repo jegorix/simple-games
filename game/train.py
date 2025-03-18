@@ -164,8 +164,8 @@ while running:
         if bg_x == -w_width:
             bg_x = 0
 
-        if keys[pygame.K_SPACE]:
-            fireball_list.append(fireball.get_rect(topleft = (player_x + 35, player_y_pos + 13)))
+        # if keys[pygame.K_SPACE]:
+        #     fireball_list.append(fireball.get_rect(topleft = (player_x + 35, player_y_pos + 13)))
 
         if fireball_list:
             for i, elem in enumerate(fireball_list):
@@ -178,6 +178,7 @@ while running:
                 if ghost_list_in_game:
                     for j, ghost_elem in enumerate(ghost_list_in_game):
                         if elem.colliderect(ghost_elem):
+                            score += 1
                             ghost_list_in_game.pop(j)
                             fireball_list.pop(i)
 
@@ -216,6 +217,9 @@ while running:
 
         if event.type == ghost_timer:
             ghost_list_in_game.append(ghost.get_rect(topleft = (ghost_x, ghost_y)))
+
+        if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            fireball_list.append(fireball.get_rect(topleft=(player_x + 35, player_y_pos + 13)))
 
 
 
