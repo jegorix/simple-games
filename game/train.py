@@ -76,6 +76,8 @@ ghost = pygame.image.load('images/ghost.png').convert_alpha()
 ghost_x = w_width + 10
 ghost_y = 535
 ghost_list_in_game = []
+ghost_speed = 10
+
 
 
 ghost_timer = pygame.USEREVENT + 1
@@ -83,6 +85,8 @@ pygame.time.set_timer(ghost_timer, 2000)
 
 bullet_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(bullet_timer, 5000)
+
+# change ghost speed
 
 fireball = pygame.image.load('images/fireball.png').convert_alpha()
 fireball_list = []
@@ -128,7 +132,7 @@ while running:
         if ghost_list_in_game:
             for i, elem in enumerate(ghost_list_in_game):
                 screen.blit(ghost, elem)
-                elem.x -= 10
+                elem.x -= ghost_speed
 
 
                 if elem.x == ghost.get_width() - 4:
@@ -231,6 +235,7 @@ while running:
             fireball_count = 5
             gameplay = True
             player_x = 150
+            ghost_speed = 10
             ghost_list_in_game.clear()
             fireball_list.clear()
             player_bullets.clear()
@@ -255,6 +260,8 @@ while running:
 
         if event.type == bullet_timer:
             player_bullets.append(fireball.get_rect(topleft=(random.randint(100, w_width - 100), w_height - 160)))
+            ghost_speed += 5
+
 
 
 
