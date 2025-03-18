@@ -81,6 +81,9 @@ pygame.time.set_timer(ghost_timer, 2000)
 
 fireball = pygame.image.load('images/fireball.png').convert_alpha()
 fireball_list = []
+fireball_count = 5
+
+
 
 gameplay = True
 running = True
@@ -106,6 +109,7 @@ while running:
 
 
                 if elem.x == ghost.get_width() - 4:
+                    fireball_count += 1
                     score += 1
                     ghost_list_in_game.pop(i)
 
@@ -196,6 +200,7 @@ while running:
         mouse_pos = pygame.mouse.get_pos()
         if restart_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
             score = 0
+            fireball_count = 5
             gameplay = True
             player_x = 150
             ghost_list_in_game.clear()
@@ -218,8 +223,9 @@ while running:
         if event.type == ghost_timer:
             ghost_list_in_game.append(ghost.get_rect(topleft = (ghost_x, ghost_y)))
 
-        if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+        if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_SPACE and fireball_count > 0:
             fireball_list.append(fireball.get_rect(topleft=(player_x + 35, player_y_pos + 13)))
+            fireball_count -= 1
 
 
 
