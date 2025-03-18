@@ -112,8 +112,12 @@ while running:
         screen.blit(record_text, (50, 100))
         screen.blit(bullet_text, (50, 150))
 
-        if  0 < len(player_bullets) < 5:
+        if player_bullets:
             for i, bullet in enumerate(player_bullets):
+                if len(player_bullets) > 3:
+                    player_bullets.pop(i)
+
+
                 screen.blit(fireball, bullet)
                 if player_rect.colliderect(bullet):
                     fireball_count += 1
