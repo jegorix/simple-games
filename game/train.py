@@ -168,9 +168,18 @@ while running:
             fireball_list.append(fireball.get_rect(topleft = (player_x + 35, player_y_pos + 13)))
 
         if fireball_list:
-            for elem in fireball_list:
+            for i, elem in enumerate(fireball_list):
                 screen.blit(fireball, (elem.x, elem.y))
                 elem.x += 10
+
+                if elem.x > w_width:
+                    fireball_list.pop(i)
+
+                if ghost_list_in_game:
+                    for j, ghost_elem in enumerate(ghost_list_in_game):
+                        if elem.colliderect(ghost_elem):
+                            ghost_list_in_game.pop(j)
+                            fireball_list.pop(i)
 
 
 
