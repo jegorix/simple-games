@@ -69,6 +69,7 @@ score = 0
 score_font = pygame.font.Font(None, 48)
 
 
+record = 0
 
 ghost = pygame.image.load('images/ghost.png').convert_alpha()
 ghost_x = w_width + 10
@@ -99,7 +100,9 @@ while running:
         ghost_rect = ghost.get_rect(topleft = (ghost_x, ghost_y))
 
         score_text = score_font.render(f"Score: {score}", True, (255, 255, 255))
+        record_text = score_font.render(f"Record: {record}", True, (255,255,255))
         screen.blit(score_text, (50, 50))
+        screen.blit(record_text, (50, 100))
 
 
         if ghost_list_in_game:
@@ -186,6 +189,9 @@ while running:
                             ghost_list_in_game.pop(j)
                             fireball_list.pop(i)
 
+        if score > record:
+            record = score
+
 
 
 
@@ -195,6 +201,7 @@ while running:
         screen.blit(lose_label, ((w_width - lose_label.get_width()) // 2,  lose_label.get_height()))
         screen.blit(restart_label, restart_label_rect)
         screen.blit(score_text, (50, 50))
+        screen.blit(record_text, (50, 100))
         screen.blit(quit_label, quit_label_rect)
 
         mouse_pos = pygame.mouse.get_pos()
@@ -209,6 +216,7 @@ while running:
         elif quit_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
             pygame.quit()
             running = False
+
 
 
 
