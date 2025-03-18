@@ -107,13 +107,17 @@ while running:
 
         score_text = score_font.render(f"Score: {score}", True, (255, 255, 255))
         record_text = score_font.render(f"Record: {record}", True, (255,255,255))
+        bullet_text = score_font.render(f"Bullets: {fireball_count}", True, (255,255,255))
         screen.blit(score_text, (50, 50))
         screen.blit(record_text, (50, 100))
+        screen.blit(bullet_text, (50, 150))
 
         if  0 < len(player_bullets) < 5:
             for i, bullet in enumerate(player_bullets):
                 screen.blit(fireball, bullet)
-                # if player_rect.colliderect(bullet):
+                if player_rect.colliderect(bullet):
+                    fireball_count += 1
+                    player_bullets.pop(i)
 
 
 
@@ -216,6 +220,7 @@ while running:
         screen.blit(record_text, (50, 100))
         screen.blit(quit_label, quit_label_rect)
 
+
         mouse_pos = pygame.mouse.get_pos()
         if restart_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
             score = 0
@@ -224,6 +229,7 @@ while running:
             player_x = 150
             ghost_list_in_game.clear()
             fireball_list.clear()
+            player_bullets.clear()
 
         elif quit_label_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
             pygame.quit()
