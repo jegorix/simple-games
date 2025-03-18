@@ -1,4 +1,5 @@
 import pygame
+import random
 
 clock = pygame.time.Clock()
 
@@ -80,9 +81,14 @@ ghost_list_in_game = []
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 2000)
 
+bullet_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(bullet_timer, 5000)
+
 fireball = pygame.image.load('images/fireball.png').convert_alpha()
 fireball_list = []
 fireball_count = 5
+player_bullets = []
+
 
 
 
@@ -103,6 +109,12 @@ while running:
         record_text = score_font.render(f"Record: {record}", True, (255,255,255))
         screen.blit(score_text, (50, 50))
         screen.blit(record_text, (50, 100))
+
+        if  0 < len(player_bullets) < 5:
+            for i, bullet in enumerate(player_bullets):
+                screen.blit(fireball, bullet)
+                # if player_rect.colliderect(bullet):
+
 
 
         if ghost_list_in_game:
@@ -231,9 +243,15 @@ while running:
         if event.type == ghost_timer:
             ghost_list_in_game.append(ghost.get_rect(topleft = (ghost_x, ghost_y)))
 
+        if event.type == bullet_timer:
+            player_bullets.append(fireball.get_rect(topleft=(random.randint(100, w_width - 100), w_height - 160)))
+
+
+
         if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_SPACE and fireball_count > 0:
             fireball_list.append(fireball.get_rect(topleft=(player_x + 35, player_y_pos + 13)))
             fireball_count -= 1
+
 
 
 
