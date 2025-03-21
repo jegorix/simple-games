@@ -2,6 +2,8 @@ import pygame
 import random
 import time
 
+
+
 pygame.init()
 
 window_size = (800, 600)
