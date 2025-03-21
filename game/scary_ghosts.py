@@ -1,6 +1,8 @@
 import pygame
 import random
 
+
+
 clock = pygame.time.Clock()
 
 pygame.init()
@@ -80,8 +82,9 @@ ghost_speed = 10
 
 
 
+
 ghost_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(ghost_timer, 2000)
+pygame.time.set_timer(ghost_timer, 1000)
 
 bullet_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(bullet_timer, 5000)
