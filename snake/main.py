@@ -1,11 +1,29 @@
 import tkinter as tk
+import pygame
 import random
+
+
 
 # game const
 WIDTH = 400
 HEIGHT = 400
 CELL_SIZE = 10
 DELAY = 100
+pygame.mixer.init()
+sounds = {
+    'apple': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/apple.mp3',
+    'collision': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/crash.mp3',
+    'game_over': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/game_over.mp3',
+    'game_start': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/game_start.mp3',
+}
+
+
+# add audio effects
+def play_sound(sound_file):    
+    pygame.mixer.music.load(sound_file)
+    pygame.mixer.music.play()
+
+
 
 # main window
 root = tk.Tk()
@@ -94,6 +112,7 @@ def restart_game():
     draw_snake()
     update_title()
     
+    play_sound(sound_file=sounds['game_start'])
     root.after(DELAY, game_loop)
          
         
@@ -149,11 +168,12 @@ def check_food_colision():
     if snake[0] == food:
         score += 1
         food = create_food()
+        play_sound(sounds['apple'])
         return True
     return False 
     
     
-# wall collision
+# wall collision</KeyPress>
 def check_wall_collision():
     head_x, head_y = snake[0]
     return(
@@ -188,6 +208,8 @@ def game_loop():
         return
     
     if check_wall_collision() or check_self_collision():
+        play_sound(sounds['collision'])
+        # play_sound(sounds['game_over'])
         end_game()
         return
     
