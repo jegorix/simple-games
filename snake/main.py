@@ -112,8 +112,29 @@ def check_food_colision():
     return False 
     
     
+# wall collision
+def check_wall_collision():
+    head_x, head_y = snake[0]
+    return(
+        head_x < 0 or head_x >= WIDTH or
+        head_y < 0 or head_y >= HEIGHT
+    )
+    
+# self collision
+def check_self_collision():
+    return snake[0] in snake[1:]
     
     
+# game finish
+def end_game():
+    global game_over
+    game_over = True
+    canvas.create_text(
+        WIDTH // 2, HEIGHT // 2,
+        text=f"Game over! Score: {score}",
+        fill="white",
+        font=("Arial", 24)
+    )   
     
     
     
@@ -121,6 +142,14 @@ def check_food_colision():
 def game_loop():
     global snake, food, score
     move_snake()
+    
+    if game_over:
+        return
+    
+    if check_wall_collision() or check_self_collision():
+        end_game()
+        return
+    
     canvas.delete("all")
     draw_food()
     draw_snake()
