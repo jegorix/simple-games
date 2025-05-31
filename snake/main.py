@@ -63,11 +63,34 @@ def draw_snake():
             fill="green",
             outline="darkgreen",     
         )
+        
+# game restart
+def restart_game():
+    global snake, direction, food, score, game_over
+    
+    snake = [(100, 100), (90, 100), (80, 100)]
+    direction = 'Right'
+    food = create_food()
+    score = 0
+    game_over = False
+    
+    canvas.delete("all")
+    draw_food()
+    draw_snake()
+    update_title()
+    
+    root.after(DELAY, game_loop)
+         
+        
+        
+        
+        
+        
 
    
 # keystroke handling
 def on_key_press(event):
-    global direction
+    global direction, game_over
     key = event.keysym
     if key in DIRECTIONS:
         if(key == 'Up' and direction != 'Down' or
@@ -75,6 +98,9 @@ def on_key_press(event):
            key == 'Left' and direction != 'Right' or
            key == 'Right' and direction != 'Left'):
             direction = key
+    elif key == 'space' and game_over:
+        restart_game()
+               
 root.bind("<KeyPress>", on_key_press)
 
 
