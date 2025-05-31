@@ -23,8 +23,23 @@ canvas = tk.Canvas(
 canvas.pack()
 
 
+
+
+# create snake at random position
+def create_snake():
+    max_x = (WIDTH // CELL_SIZE) - 3
+    max_y = (HEIGHT // CELL_SIZE) - 1
+    
+    x = random.randint(0, max_x) * CELL_SIZE
+    y = random.randint(0, max_y) * CELL_SIZE
+    
+    return [(x,y), (x - CELL_SIZE, y), (x - CELL_SIZE * 2, y)]
+
+
+
+
 # initial state of the game
-snake = [(100, 100), (90, 100), (80, 100)]
+snake = create_snake()
 direction = 'Right'
 DIRECTIONS = ["Up", "Down", "Left", "Right"]
 food = None
@@ -68,7 +83,7 @@ def draw_snake():
 def restart_game():
     global snake, direction, food, score, game_over
     
-    snake = [(100, 100), (90, 100), (80, 100)]
+    snake = create_snake()
     direction = 'Right'
     food = create_food()
     score = 0
