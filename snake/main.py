@@ -1,6 +1,8 @@
 import tkinter as tk
 import pygame
 import random
+import sys
+import os
 
 
 
@@ -10,6 +12,7 @@ HEIGHT = 400
 CELL_SIZE = 10
 DELAY = 100
 pygame.mixer.init()
+BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 sounds = {
     'apple': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/apple.mp3',
     'collision': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/crash.mp3',
@@ -17,6 +20,13 @@ sounds = {
     'game_start': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/game_start.mp3',
 }
 
+audio_files = [
+    'apple.mp3',
+    'crash.mp3',
+    'game_over.mp3',
+    'game_start.mp3',
+]
+audio_paths = [os.path.join(BASE_DIR, "static", "audio", filename) for filename in audio_files]
 
 # add audio effects
 def play_sound(sound_file):    
