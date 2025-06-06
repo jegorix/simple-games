@@ -57,6 +57,15 @@ def draw_grid(screen, grid, cell_size):
             pygame.draw.rect(screen, color, (j * cell_size, i * cell_size, cell_size, cell_size))
             pygame.draw.rect(screen, (50, 50, 50), (j * cell_size, i * cell_size, cell_size, cell_size), 1)
             
+def set_value(grid, mouse_pos):
+    x,y = mouse_pos[0] // CELL_SIZE, mouse_pos[1] // CELL_SIZE
+    grid[y][x] = 1
+    
+    
+
+    
+    
+            
             
             
 def main():
@@ -70,6 +79,11 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
+        
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                set_value(grid, mouse_pos)
+                
             
         draw_grid(screen, grid, CELL_SIZE)
         grid = next_generation(grid)
