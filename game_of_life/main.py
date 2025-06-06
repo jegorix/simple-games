@@ -2,6 +2,7 @@ import pygame
 import random
 
 ROWS, COLS = 20, 20
+CELL_SIZE = 20
 
 def create_grid(rows, cols):
     grid = []
@@ -49,7 +50,32 @@ def next_generation(grid):
                     new_grid[i][j] = 1
     return new_grid
 
-game_grid = create_grid(ROWS, COLS)
-show_grid(game_grid)
-game_grid = next_generation(game_grid)
-show_grid(game_grid)
+def draw_grid(screen, grid, cell_size):
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            color = (255, 0, 0) if grid[i][j] else (0, 0, 0)
+            pygame.draw.rect(screen, color, (j * cell_size, i * cell_size, cell_size, cell_size))
+            pygame.draw.rect(screen, (50, 50, 50), (j * cell_size, i * cell_size, cell_size, cell_size), 1)
+            
+            
+            
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((ROWS*CELL_SIZE, COLS*CELL_SIZE))
+    pygame.display.set_caption("Game Of Life")
+    running = True
+    grid = create_grid(ROWS, COLS)
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            
+        draw_grid(screen, grid, CELL_SIZE)
+        grid = next_generation(grid)
+        
+        pygame.time.delay(400)
+        pygame.display.flip()
+                
+
+main()
