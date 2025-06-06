@@ -80,9 +80,13 @@ def main():
                 running = False
                 pygame.quit()
         
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 set_value(grid, mouse_pos)
+            
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    grid = create_grid(ROWS, COLS)
                 
             
         draw_grid(screen, grid, CELL_SIZE)
