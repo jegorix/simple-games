@@ -11,14 +11,14 @@ pygame.display.set_caption("Collision Simulator")
 
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-background_image = pygame.image.load("/Users/macbook/PycharmProjects/scripts_edu/collision_simulator/image/space.jpg")
+background_image = pygame.image.load("/Users/macbook/PycharmProjects/snake-interface/collision_simulator/image/space.jpg")
 background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
 
 ico_image = pygame.image.load(ICON_PATH).convert_alpha()
 pygame.display.set_icon(ico_image)
 
-object_mars_image = pygame.image.load("/Users/macbook/PycharmProjects/scripts_edu/collision_simulator/image/mars.svg").convert_alpha()
-object_saturno_image = pygame.image.load("/Users/macbook/PycharmProjects/scripts_edu/collision_simulator/image/saturno.svg").convert_alpha()
+object_mars_image = pygame.image.load("/Users/macbook/PycharmProjects/snake-interface/collision_simulator/image/mars.svg").convert_alpha()
+object_saturno_image = pygame.image.load("/Users/macbook/PycharmProjects/snake-interface/collision_simulator/image/saturno.svg").convert_alpha()
 
 button_increase_obj1 = pygame.Rect(30, 130, 60, 30)
 button_decrease_obj1 = pygame.Rect(110, 130, 60, 30)

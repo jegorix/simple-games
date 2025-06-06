@@ -61,6 +61,15 @@ def set_value(grid, mouse_pos):
     x,y = mouse_pos[0] // CELL_SIZE, mouse_pos[1] // CELL_SIZE
     grid[y][x] = 1
     
+def calculate_population(grid):
+    count = 0
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == 1:
+                count += 1
+    return count
+            
+    
     
 
     
@@ -88,10 +97,10 @@ def main():
                 if event.key == pygame.K_SPACE:
                     grid = create_grid(ROWS, COLS)
                 
-            
+        print(f"Population: {calculate_population(grid)}")
+        
         draw_grid(screen, grid, CELL_SIZE)
         grid = next_generation(grid)
-        
         pygame.time.delay(400)
         pygame.display.flip()
                 
