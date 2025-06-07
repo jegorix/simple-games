@@ -80,9 +80,12 @@ def calculate_population(grid):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((ROWS*CELL_SIZE, COLS*CELL_SIZE))
-    pygame.display.set_caption("Game Of Life")
-    running = True
     grid = create_grid(ROWS, COLS)
+    pygame.display.set_caption(f"Game Of Life. Population: {calculate_population(grid)}")
+    running = True
+    clock = pygame.time.Clock()
+    FPS = 3
+    font = pygame.font.SysFont('Arial', 20)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -96,12 +99,11 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     grid = create_grid(ROWS, COLS)
-                
-        print(f"Population: {calculate_population(grid)}")
         
         draw_grid(screen, grid, CELL_SIZE)
+        pygame.display.set_caption(f"Game Of Life. Population: {calculate_population(grid)}")
         grid = next_generation(grid)
-        pygame.time.delay(400)
+        clock.tick(FPS)
         pygame.display.flip()
                 
 
