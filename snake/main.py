@@ -7,17 +7,22 @@ import os
 
 
 # game const
-WIDTH = 400
-HEIGHT = 400
-CELL_SIZE = 10
+
+
+WIDTH = 800
+HEIGHT = 800
+CELL_SIZE = 20
 DELAY = 100
 pygame.mixer.init()
 BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+LINES = False
+
+
 sounds = {
-    'apple': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/apple.mp3',
-    'collision': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/crash.mp3',
-    'game_over': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/game_over.mp3',
-    'game_start': '/Users/macbook/PycharmProjects/snake-interface-1/snake/static/audio/game_start.mp3',
+    'apple': '/Users/macbook/PycharmProjects/snake-interface/snake/static/audio/apple.mp3',
+    'collision': '/Users/macbook/PycharmProjects/snake-interface/snake/static/audio/crash.mp3',
+    'game_over': '/Users/macbook/PycharmProjects/snake-interface/snake/static/audio/game_over.mp3',
+    'game_start': '/Users/macbook/PycharmProjects/snake-interface/snake/static/audio/game_start.mp3',
 }
 
 audio_files = [
@@ -134,7 +139,7 @@ def restart_game():
    
 # keystroke handling
 def on_key_press(event):
-    global direction, game_over
+    global direction, game_over, LINES
     key = event.keysym
     if key in DIRECTIONS:
         if(key == 'Up' and direction != 'Down' or
@@ -144,6 +149,9 @@ def on_key_press(event):
             direction = key
     elif key == 'space' and game_over:
         restart_game()
+    elif key == 'k':
+        LINES = not LINES
+        
                
 root.bind("<KeyPress>", on_key_press)
 
@@ -209,6 +217,16 @@ def end_game():
     
     
     
+def draw_lines(canvas):
+    for i in range(0, WIDTH, CELL_SIZE):
+        canvas.create_line(i, 0, i, HEIGHT, fill="gray")
+        
+    for j in range(0, HEIGHT, CELL_SIZE):
+        canvas.create_line(0, j, WIDTH, j, fill="gray")
+        
+    
+
+    
 # create game main cycle
 def game_loop():
     global snake, food, score
@@ -228,6 +246,9 @@ def game_loop():
     draw_snake()
     update_title()
     root.after(DELAY, game_loop)
+    
+    if LINES:
+        draw_lines(canvas)
 
 draw_food()
 draw_snake()
