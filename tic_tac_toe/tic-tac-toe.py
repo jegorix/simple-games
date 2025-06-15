@@ -83,6 +83,7 @@ class Game:
         self.game_status = True
         self.players = players
         self.game_field = field
+        self.draws = 0
     
     def execute_move(self, player):
         while True:
@@ -99,6 +100,7 @@ class Game:
             return True
         
         elif result == 'draw':
+            self.draws += 1
             print("Draw")
             return True
         
@@ -109,15 +111,35 @@ class Game:
         while running:
             for player in self.players:
                 if self.execute_move(player):
-                    return
-        
+                    return True
+                
+    def game_continue(self):
+        print("Do you want to start again?")
+        while True:
+            choice = input("y/n: ")
+            if choice == 'y':
+                return True
+            elif choice == 'n':
+                return False
+            else:
+                print("Wrong answer!")
     
     def game_start(self):
-        self.game_field.draw_field()
-        self.game_field.show_field()
-        self.game_running()
+        while True:
+            self.game_field.draw_field()
+            self.game_field.show_field()
+            if self.game_running():
+                self.score_info()
+                if not self.game_continue():
+                    print('Exit...')
+                    break
+                    
         
-            
+        
+    def score_info(self):
+        for player in players:
+            print("Score:", f"Player {player.name}: {player.wins}")
+        print(f"Draws: {self.draws}") if self.draws else print()
 
 player_1 = Player('Thomas', 'X')
 player_2 = Player('Jane', 'O')
